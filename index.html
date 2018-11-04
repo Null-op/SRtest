@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.js"></script>
+    </head>
+    <body>
+        <form id="signupListImportForm" class="import-file-form" enctype="multipart/form-data">  
+            <input type="file" name="speechFile" id="speechFile" style="display:none" multiple="multiple" onchange="fileUpload()">
+            <!-- multiple属性为多文件上传 -->
+            <input class="btn-dr" type="button" value="选择语音文件" onclick="selectFile()">  
+        </form>
+        
+        <script>
+            // 打开文件选择框
+            function selectFile(){
+                $("#speechFile").trigger("click");
+            }
+                
+            // 文件上传
+            function fileUpload(){
+                var option = {
+                    url : "index.php",//这里写你的url
+                    type : 'POST',
+                    datatype:'json',//这里是返回类型，一般是json,text
+                    clearForm: true,//提交后是否清空
+                    success : function(map) {
+                        map = JSON.parse(map)
+                        console.log(map)
+                        alert( map.message);
+                    } ,
+                    error:function(data){
+                        alert("页面请求失败！");
+                    }
+                };
+                $("#signupListImportForm").ajaxSubmit(option);
+                return false;
+            }
+        </script>
+    </body>
+    
+</html>
+
